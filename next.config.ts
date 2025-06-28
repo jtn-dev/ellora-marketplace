@@ -41,6 +41,20 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Add experimental features for better compatibility
+  experimental: {
+    esmExternals: 'loose',
+  },
+  // Webpack configuration for better module resolution
+  webpack: (config: any) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+    };
+    return config;
+  },
 };
 
 export default nextConfig;

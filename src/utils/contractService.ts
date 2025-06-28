@@ -18,6 +18,34 @@ const TESTNET_CONFIG: ContractConfig = {
 
 const ALGORAND_NODE_URL = 'https://testnet-api.algonode.cloud';
 
+// Type definitions for AlgoSDK responses
+interface TealKeyValue {
+  key: string;
+  value: {
+    bytes?: string;
+    uint?: number;
+    type: number;
+  };
+}
+
+interface GlobalState {
+  key: string;
+  value: {
+    bytes?: string;
+    uint?: number;
+    type: number;
+  };
+}
+
+interface LocalState {
+  key: string;
+  value: {
+    bytes?: string;
+    uint?: number;
+    type: number;
+  };
+}
+
 export class ContractService {
   private algodClient: algosdk.Algodv2;
   private peraWallet: PeraWalletConnect;
@@ -71,7 +99,7 @@ export class ContractService {
 
       // Submit to blockchain
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid; // Fixed: use txid instead of txId
+      const txId = response.txid;
       
       // Wait for confirmation
       await this.waitForConfirmation(txId);
@@ -116,7 +144,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid; // Fixed: use txid instead of txId
+      const txId = response.txid;
       
       await this.waitForConfirmation(txId);
 
@@ -160,7 +188,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid; // Fixed: use txid instead of txId
+      const txId = response.txid;
       
       await this.waitForConfirmation(txId);
 
@@ -204,7 +232,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid; // Fixed: use txid instead of txId
+      const txId = response.txid;
       
       await this.waitForConfirmation(txId);
 
@@ -248,7 +276,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid; // Fixed: use txid instead of txId
+      const txId = response.txid;
       
       await this.waitForConfirmation(txId);
 
@@ -294,7 +322,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid; // Fixed: use txid instead of txId
+      const txId = response.txid;
       
       await this.waitForConfirmation(txId);
 
@@ -339,7 +367,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid; // Fixed: use txid instead of txId
+      const txId = response.txid;
       
       await this.waitForConfirmation(txId);
 
@@ -365,15 +393,14 @@ export class ContractService {
     try {
       const appInfo = await this.algodClient.getApplicationByID(jobAppId).do();
       
-      if (!appInfo.params.globalState) {
+      if (!appInfo.params['global-state']) {
         return null;
       }
 
-      const globalState = appInfo.params.globalState;
+      const globalState: GlobalState[] = appInfo.params['global-state'];
       const jobData: Partial<JobContract> = { appId: jobAppId };
 
-      // Fixed: Use proper typing for global state items
-      globalState.forEach((item: { key: string; value: { bytes?: string; uint?: number } }) => {
+      globalState.forEach((item: GlobalState) => {
         const key = Buffer.from(item.key, 'base64').toString();
         
         switch (key) {
@@ -443,15 +470,14 @@ export class ContractService {
         this.config.sbtAppId
       ).do();
 
-      if (!accountInfo.appLocalState || !accountInfo.appLocalState.keyValue) {
+      if (!accountInfo['app-local-state'] || !accountInfo['app-local-state']['key-value']) {
         return null;
       }
 
-      const localState = accountInfo.appLocalState.keyValue;
+      const localState: LocalState[] = accountInfo['app-local-state']['key-value'];
       const reputation: Partial<ReputationData> = {};
 
-      // Fixed: Use proper typing for local state items
-      localState.forEach((item: { key: string; value: { uint?: number } }) => {
+      localState.forEach((item: LocalState) => {
         const key = Buffer.from(item.key, 'base64').toString();
         const value = item.value.uint || 0;
 
@@ -555,12 +581,12 @@ export class ContractService {
    */
   private async waitForConfirmation(txId: string): Promise<any> {
     const response = await this.algodClient.status().do();
-    let lastRound = response.lastRound;
+    let lastRound = response['last-round'];
     
     while (true) {
       const pendingInfo = await this.algodClient.pendingTransactionInformation(txId).do();
       
-      if (pendingInfo.confirmedRound !== null && pendingInfo.confirmedRound !== undefined && pendingInfo.confirmedRound > 0) {
+      if (pendingInfo['confirmed-round'] !== null && pendingInfo['confirmed-round'] !== undefined && pendingInfo['confirmed-round'] > 0) {
         return pendingInfo;
       }
       
