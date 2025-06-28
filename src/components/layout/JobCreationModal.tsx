@@ -278,4 +278,4 @@ export default function JobCreationModal({ isOpen, onClose, onJobCreated }: JobC
       </div>
     </div>
   );
-} 
+}

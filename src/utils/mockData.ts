@@ -178,4 +178,4 @@ export const mockUserProfile = {
   rating: 4.7,
   completedJobs: 12,
   joinedDate: new Date('2024-01-15'),
-}; 
+};

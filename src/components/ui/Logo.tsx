@@ -33,4 +33,4 @@ const Logo: React.FC<LogoProps> = ({ size = 'md' }) => {
   );
 };
 
-export default Logo; 
+export default Logo;
