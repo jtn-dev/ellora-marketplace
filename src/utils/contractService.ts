@@ -373,7 +373,7 @@ export class ContractService {
       const globalState = appInfo.params.globalState;
       const jobData: Partial<JobContract> = { appId: jobAppId };
 
-      globalState.forEach((item: algosdk.models.TealKeyValue) => {
+      globalState.forEach((item: any) => {
         const key = Buffer.from(item.key, 'base64').toString();
         
         switch (key) {
@@ -434,7 +434,7 @@ export class ContractService {
       const localState = accountInfo.appLocalState.keyValue;
       const reputation: Partial<ReputationData> = {};
 
-      localState.forEach((item: algosdk.models.TealKeyValue) => {
+      localState.forEach((item: any) => {
         const key = Buffer.from(item.key, 'base64').toString();
         const value = item.value.uint || 0;
 
@@ -536,12 +536,12 @@ export class ContractService {
   /**
    * Wait for transaction confirmation
    */
-  private async waitForConfirmation(txId: string): Promise<algosdk.models.PendingTransactionResponse> {
-    const response: algosdk.models.NodeStatusResponse = await this.algodClient.status().do();
+  private async waitForConfirmation(txId: string): Promise<any> {
+    const response = await this.algodClient.status().do();
     let lastRound = response.lastRound;
     
     while (true) {
-      const pendingInfo: algosdk.models.PendingTransactionResponse = await this.algodClient.pendingTransactionInformation(txId).do();
+      const pendingInfo = await this.algodClient.pendingTransactionInformation(txId).do();
       
       if (pendingInfo.confirmedRound !== null && pendingInfo.confirmedRound !== undefined && pendingInfo.confirmedRound > 0) {
         return pendingInfo;
