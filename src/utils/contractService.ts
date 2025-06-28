@@ -17,7 +17,6 @@ const TESTNET_CONFIG: ContractConfig = {
 };
 
 const ALGORAND_NODE_URL = 'https://testnet-api.algonode.cloud';
-const ALGORAND_NODE_PORT = 443;
 
 export class ContractService {
   private algodClient: algosdk.Algodv2;
@@ -25,7 +24,7 @@ export class ContractService {
   private config: ContractConfig;
 
   constructor(peraWallet: PeraWalletConnect, config = TESTNET_CONFIG) {
-    this.algodClient = new algosdk.Algodv2('', ALGORAND_NODE_URL, ALGORAND_NODE_PORT);
+    this.algodClient = new algosdk.Algodv2('', ALGORAND_NODE_URL);
     this.peraWallet = peraWallet;
     this.config = config;
   }
@@ -72,7 +71,7 @@ export class ContractService {
 
       // Submit to blockchain
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txid; // Fixed: use txid instead of txId
       
       // Wait for confirmation
       await this.waitForConfirmation(txId);
@@ -117,7 +116,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txid; // Fixed: use txid instead of txId
       
       await this.waitForConfirmation(txId);
 
@@ -161,7 +160,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txid; // Fixed: use txid instead of txId
       
       await this.waitForConfirmation(txId);
 
@@ -205,7 +204,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txid; // Fixed: use txid instead of txId
       
       await this.waitForConfirmation(txId);
 
@@ -249,7 +248,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txid; // Fixed: use txid instead of txId
       
       await this.waitForConfirmation(txId);
 
@@ -295,7 +294,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txid; // Fixed: use txid instead of txId
       
       await this.waitForConfirmation(txId);
 
@@ -340,7 +339,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txid; // Fixed: use txid instead of txId
       
       await this.waitForConfirmation(txId);
 
@@ -373,12 +372,15 @@ export class ContractService {
       const globalState = appInfo.params.globalState;
       const jobData: Partial<JobContract> = { appId: jobAppId };
 
-      globalState.forEach((item: any) => {
+      // Fixed: Use proper typing for global state items
+      globalState.forEach((item: { key: string; value: { bytes?: string; uint?: number } }) => {
         const key = Buffer.from(item.key, 'base64').toString();
         
         switch (key) {
           case 'client':
-            jobData.clientAddress = algosdk.encodeAddress(Buffer.from(item.value.bytes, 'base64'));
+            if (item.value.bytes) {
+              jobData.clientAddress = algosdk.encodeAddress(Buffer.from(item.value.bytes, 'base64'));
+            }
             break;
           case 'freelancer':
             if (item.value.bytes) {
@@ -386,25 +388,39 @@ export class ContractService {
             }
             break;
           case 'amount':
-            jobData.amount = item.value.uint / 1000000; // Convert from microAlgos
+            if (item.value.uint !== undefined) {
+              jobData.amount = item.value.uint / 1000000; // Convert from microAlgos
+            }
             break;
           case 'status':
-            jobData.status = item.value.uint as JobStatus;
+            if (item.value.uint !== undefined) {
+              jobData.status = item.value.uint as JobStatus;
+            }
             break;
           case 'created':
-            jobData.createdTimestamp = item.value.uint;
+            if (item.value.uint !== undefined) {
+              jobData.createdTimestamp = item.value.uint;
+            }
             break;
           case 'deadline':
-            jobData.deadlineTimestamp = item.value.uint;
+            if (item.value.uint !== undefined) {
+              jobData.deadlineTimestamp = item.value.uint;
+            }
             break;
           case 'votes_for':
-            jobData.disputeVotesFor = item.value.uint;
+            if (item.value.uint !== undefined) {
+              jobData.disputeVotesFor = item.value.uint;
+            }
             break;
           case 'votes_against':
-            jobData.disputeVotesAgainst = item.value.uint;
+            if (item.value.uint !== undefined) {
+              jobData.disputeVotesAgainst = item.value.uint;
+            }
             break;
           case 'jurors':
-            jobData.totalJurors = item.value.uint;
+            if (item.value.uint !== undefined) {
+              jobData.totalJurors = item.value.uint;
+            }
             break;
         }
       });
@@ -434,7 +450,8 @@ export class ContractService {
       const localState = accountInfo.appLocalState.keyValue;
       const reputation: Partial<ReputationData> = {};
 
-      localState.forEach((item: any) => {
+      // Fixed: Use proper typing for local state items
+      localState.forEach((item: { key: string; value: { uint?: number } }) => {
         const key = Buffer.from(item.key, 'base64').toString();
         const value = item.value.uint || 0;
 

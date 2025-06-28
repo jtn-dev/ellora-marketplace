@@ -6,9 +6,9 @@ export interface JobContract {
   status: JobStatus;
   createdTimestamp: number;
   deadlineTimestamp: number;
-  disputeVotesFor: number;
-  disputeVotesAgainst: number;
-  totalJurors: number;
+  disputeVotesFor?: number;
+  disputeVotesAgainst?: number;
+  totalJurors?: number;
 }
 
 export enum JobStatus {
