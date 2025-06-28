@@ -27,7 +27,7 @@ interface TestResult {
 }
 
 const ContractTester = () => {
-  const { walletState } = usePeraWallet();
+  const { walletState, peraWallet } = usePeraWallet();
   const [isRunning, setIsRunning] = useState(false);
   const [contractHealth, setContractHealth] = useState<any>(null);
   const [testResults, setTestResults] = useState<TestResult[]>([
@@ -52,7 +52,7 @@ const ContractTester = () => {
     if (!walletState.isConnected) return;
 
     try {
-      const contractService = getContractService(require('@perawallet/connect').PeraWalletConnect);
+      const contractService = getContractService(peraWallet);
       const health = await contractService.verifyContractHealth();
       setContractHealth(health);
       
@@ -75,7 +75,7 @@ const ContractTester = () => {
     }
 
     setIsRunning(true);
-    const contractService = getContractService(require('@perawallet/connect').PeraWalletConnect);
+    const contractService = getContractService(peraWallet);
     let jobAppId: number | null = null;
 
     try {

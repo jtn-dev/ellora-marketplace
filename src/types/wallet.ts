@@ -31,4 +31,5 @@ export interface WalletContextType {
   connectWallet: () => Promise<void>;
   disconnectWallet: () => void;
   refreshBalance: () => Promise<void>;
-} 
+  peraWallet: any; // PeraWalletConnect instance
+}

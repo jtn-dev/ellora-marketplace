@@ -208,6 +208,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     connectWallet,
     disconnectWallet,
     refreshBalance,
+    peraWallet,
   };
 
   return (
@@ -223,4 +224,4 @@ export function usePeraWallet() {
     throw new Error('usePeraWallet must be used within a WalletProvider');
   }
   return context;
-} 
+}
