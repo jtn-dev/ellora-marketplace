@@ -187,7 +187,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     peraWallet.connector?.on('disconnect', handleDisconnect);
 
     return () => {
-      peraWallet.connector?.off('disconnect', handleDisconnect);
+      peraWallet.connector?.off('disconnect');
     };
   }, [mounted, disconnectWallet]);
 
