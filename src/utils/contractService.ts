@@ -117,7 +117,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txId;
+      const txId = response.txid;
       
       await this.waitForConfirmation(txId);
 
