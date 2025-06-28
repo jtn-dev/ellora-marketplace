@@ -208,7 +208,6 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     connectWallet,
     disconnectWallet,
     refreshBalance,
-    peraWallet,
   };
 
   return (

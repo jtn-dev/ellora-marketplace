@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePeraWallet } from '@/hooks/usePeraWallet';
 import Button from '@/components/ui/Button';
 import Logo from '@/components/ui/Logo';
-import { Menu, X, Wallet, LogOut, TestTube } from 'lucide-react';
+import { Menu, X, Wallet, LogOut } from 'lucide-react';
 
 const Navbar = () => {
   const { walletState, connectWallet, disconnectWallet } = usePeraWallet();
@@ -35,7 +35,6 @@ const Navbar = () => {
   const navLinks = [
     { href: '/browse', label: 'Browse' },
     { href: '/dashboard', label: 'Dashboard' },
-    { href: '/testing', label: 'Testing', icon: TestTube },
     { href: '/about', label: 'About' },
   ];
 
@@ -54,9 +53,8 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className="relative text-silver-300 hover:text-white transition-all duration-300 group py-2 flex items-center gap-2"
+                className="relative text-silver-300 hover:text-white transition-all duration-300 group py-2"
               >
-                {link.icon && <link.icon className="w-4 h-4" />}
                 {link.label}
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-400 to-primary-600 group-hover:w-full transition-all duration-500 ease-out"></span>
               </Link>
@@ -126,10 +124,9 @@ const Navbar = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="block text-silver-300 hover:text-white transition-colors py-2 flex items-center gap-2"
+                  className="block text-silver-300 hover:text-white transition-colors py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {link.icon && <link.icon className="w-4 h-4" />}
                   {link.label}
                 </Link>
               ))}
