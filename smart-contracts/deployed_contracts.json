@@ -1,0 +1,9 @@
+{
+  "network": "Algorand Testnet",
+  "deployer_address": "E2LQMPBG7BVA4PBTPAOJONAEVZJY3PEZS56BZRMBMQ7QSJC3Z7IYS464IU",
+  "escrow_contract_id": 742004772,
+  "reputation_contract_id": 742004783,
+  "escrow_address": "GCPCWYEFB4XXSPGFTGQDJYYI45R76DOFLXS2Q3XJB2FD5RD3BNVXO52W6Y",
+  "reputation_address": "5ZFJE2LWEXAQRWZ2DUHBBA7BKCFRLVY3GG3SSY6GWZGEIVGX7WGVKLSAU4",
+  "deployment_time": "2025-06-28 08:22:04.221079"
+}

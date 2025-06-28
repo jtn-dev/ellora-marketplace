@@ -1,26 +1,147 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary-50: #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;
+  --color-primary-700: #15803d;
+  --color-primary-800: #166534;
+  --color-primary-900: #14532d;
+  
+  --color-silver-50: #f8fafc;
+  --color-silver-100: #f1f5f9;
+  --color-silver-200: #e2e8f0;
+  --color-silver-300: #cbd5e1;
+  --color-silver-400: #94a3b8;
+  --color-silver-500: #64748b;
+  --color-silver-600: #475569;
+  --color-silver-700: #334155;
+  --color-silver-800: #1e293b;
+  --color-silver-900: #0f172a;
+  
+  --color-matrix-green: #00ff41;
+  --color-matrix-darkGreen: #008f11;
+  --color-matrix-black: #0d1117;
+  --color-matrix-darkBlack: #010409;
+  
+  --shadow-cyber: 0 0 20px rgba(0, 255, 65, 0.3);
+  --shadow-cyber-lg: 0 0 40px rgba(0, 255, 65, 0.4);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0d1117;
+  --foreground: #f0f6fc;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #171717;
   }
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
+  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ensure Pacifico font is available */
+.font-pacifico {
+  font-family: 'Pacifico', var(--font-pacifico), cursive !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom animations for metaverse theme */
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+  }
+  to {
+    box-shadow: 0 0 40px rgba(0, 255, 65, 0.6);
+  }
+}
+
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #16a34a;
+}
+
+/* Custom utility classes */
+.btn-cyber {
+  background: linear-gradient(to right, var(--color-primary-600), var(--color-primary-500));
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-cyber);
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.btn-cyber:hover {
+  box-shadow: var(--shadow-cyber-lg);
+  transform: scale(1.05);
+}
+
+.btn-cyber-outline {
+  border: 2px solid var(--color-primary-500);
+  color: var(--color-primary-500);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.btn-cyber-outline:hover {
+  background: var(--color-primary-500);
+  color: white;
+  transform: scale(1.05);
+}
+
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
 }

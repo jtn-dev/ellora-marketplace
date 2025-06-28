@@ -1,0 +1,3 @@
+# Ellora Smart Contract Dependencies
+pyteal>=0.23.0
+py-algorand-sdk>=2.4.0
