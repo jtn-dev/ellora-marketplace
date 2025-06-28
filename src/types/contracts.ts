@@ -1,7 +1,7 @@
 export interface JobContract {
   appId: number;
   clientAddress: string;
-  freelancerAddress: string;
+  freelancerAddress?: string;
   amount: number;
   status: JobStatus;
   createdTimestamp: number;
@@ -46,4 +46,12 @@ export interface TransactionResult {
   txId?: string;
   error?: string;
   appId?: number;
-} 
+}
+
+export interface ContractHealthStatus {
+  escrowHealthy: boolean;
+  sbtHealthy: boolean;
+  escrowBalance: number;
+  sbtBalance: number;
+  errors: string[];
+}
