@@ -81,7 +81,7 @@ const Hero = () => {
             <div className="bg-silver-900/30 backdrop-blur-sm rounded-xl p-6 border border-primary-500/20 hover:border-primary-500/50 transition-all duration-300">
               <Zap className="h-8 w-8 text-primary-400 mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-white mb-2">Instant Finality</h3>
-              <p className="text-silver-400 text-sm">Payments settle in ~4 seconds with Algorand's speed</p>
+              <p className="text-silver-400 text-sm">Payments settle in ~4 seconds with Algorand&apos;s speed</p>
             </div>
             
             <div className="bg-silver-900/30 backdrop-blur-sm rounded-xl p-6 border border-primary-500/20 hover:border-primary-500/50 transition-all duration-300">
@@ -169,4 +169,4 @@ const Hero = () => {
   );
 };
 
-export default Hero; 
+export default Hero;

@@ -373,7 +373,7 @@ export class ContractService {
       const globalState = appInfo.params.globalState;
       const jobData: Partial<JobContract> = { appId: jobAppId };
 
-      globalState.forEach((item: any) => {
+      globalState.forEach((item: algosdk.TealKeyValue) => {
         const key = Buffer.from(item.key, 'base64').toString();
         
         switch (key) {
@@ -434,7 +434,7 @@ export class ContractService {
       const localState = accountInfo.appLocalState.keyValue;
       const reputation: Partial<ReputationData> = {};
 
-      localState.forEach((item: any) => {
+      localState.forEach((item: algosdk.TealKeyValue) => {
         const key = Buffer.from(item.key, 'base64').toString();
         const value = item.value.uint || 0;
 

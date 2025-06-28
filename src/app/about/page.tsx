@@ -23,8 +23,8 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent>
               <p className="text-silver-300 leading-relaxed">
-                Ellora is revolutionizing the freelance economy by leveraging Algorand's fast, secure, and low-cost blockchain infrastructure. 
-                We're building a truly decentralized marketplace where freelancers and clients can connect, transact, and build trust without 
+                Ellora is revolutionizing the freelance economy by leveraging Algorand&apos;s fast, secure, and low-cost blockchain infrastructure. 
+                We&apos;re building a truly decentralized marketplace where freelancers and clients can connect, transact, and build trust without 
                 intermediaries taking large cuts or controlling the process.
               </p>
             </CardContent>
@@ -47,4 +47,4 @@ export default function AboutPage() {
       </div>
     </div>
   );
-} 
+}
