@@ -1,6 +1,5 @@
 # 🌟 Ellora - Decentralized Freelance Marketplace
 
-> **Winner Submission for Bolt.new Hackathon** 🏆  
 > A metaverse-inspired freelance marketplace built on Algorand blockchain
 
 ![Ellora Banner](https://img.shields.io/badge/Built%20on-Algorand-00D4AA?style=for-the-badge&logo=algorand)
