@@ -12,7 +12,6 @@ const peraWallet = new PeraWalletConnect({
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 const ALGORAND_NODE_URL = 'https://testnet-api.algonode.cloud';
-const ALGORAND_NODE_PORT = 443;
 
 export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [walletState, setWalletState] = useState<PeraWalletState>({
@@ -24,7 +23,7 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   });
   const [mounted, setMounted] = useState(false);
 
-  const algodClient = useMemo(() => new algosdk.Algodv2('', ALGORAND_NODE_URL, ALGORAND_NODE_PORT), []);
+  const algodClient = useMemo(() => new algosdk.Algodv2('', ALGORAND_NODE_URL), []);
 
   const fetchBalance = useCallback(async (address: string) => {
     try {
