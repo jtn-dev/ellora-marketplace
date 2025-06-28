@@ -117,7 +117,7 @@ export class ContractService {
       ]);
 
       const response = await this.algodClient.sendRawTransaction(signedTxns).do();
-      const txId = response.txid;
+      const txId = response.txId;
       
       await this.waitForConfirmation(txId);
 
@@ -373,7 +373,7 @@ export class ContractService {
       const globalState = appInfo.params.globalState;
       const jobData: Partial<JobContract> = { appId: jobAppId };
 
-      globalState.forEach((item: algosdk.TealKeyValue) => {
+      globalState.forEach((item: algosdk.models.TealKeyValue) => {
         const key = Buffer.from(item.key, 'base64').toString();
         
         switch (key) {
@@ -434,7 +434,7 @@ export class ContractService {
       const localState = accountInfo.appLocalState.keyValue;
       const reputation: Partial<ReputationData> = {};
 
-      localState.forEach((item: algosdk.TealKeyValue) => {
+      localState.forEach((item: algosdk.models.TealKeyValue) => {
         const key = Buffer.from(item.key, 'base64').toString();
         const value = item.value.uint || 0;
 
