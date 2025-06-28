@@ -500,7 +500,7 @@ export class ContractService {
 
     try {
       // Check escrow contract
-      const escrowInfo = await this.algodClient.getApplicationByID(this.config.escrowAppId).do();
+      await this.algodClient.getApplicationByID(this.config.escrowAppId).do();
       escrowHealthy = true;
       
       const escrowAddress = algosdk.getApplicationAddress(this.config.escrowAppId);
@@ -513,7 +513,7 @@ export class ContractService {
 
     try {
       // Check SBT contract
-      const sbtInfo = await this.algodClient.getApplicationByID(this.config.sbtAppId).do();
+      await this.algodClient.getApplicationByID(this.config.sbtAppId).do();
       sbtHealthy = true;
       
       const sbtAddress = algosdk.getApplicationAddress(this.config.sbtAppId);
@@ -536,12 +536,12 @@ export class ContractService {
   /**
    * Wait for transaction confirmation
    */
-  private async waitForConfirmation(txId: string): Promise<any> {
-    let response = await this.algodClient.status().do();
+  private async waitForConfirmation(txId: string): Promise<algosdk.models.PendingTransactionResponse> {
+    const response: algosdk.models.NodeStatusResponse = await this.algodClient.status().do();
     let lastRound = response.lastRound;
     
     while (true) {
-      const pendingInfo = await this.algodClient.pendingTransactionInformation(txId).do();
+      const pendingInfo: algosdk.models.PendingTransactionResponse = await this.algodClient.pendingTransactionInformation(txId).do();
       
       if (pendingInfo.confirmedRound !== null && pendingInfo.confirmedRound !== undefined && pendingInfo.confirmedRound > 0) {
         return pendingInfo;
